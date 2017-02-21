@@ -3,6 +3,7 @@ package com.personalDoc.pages;
 import javax.naming.directory.DirContext;
 
 import com.alibaba.fastjson.JSONObject;
+import macaca.client.commands.Element;
 import macaca.java.biz.BasePage;
 import com.personalDoc.pageuis.HomeListPageUI;
 
@@ -17,24 +18,43 @@ public class HomeListPage extends BasePage{
 	 * 上下滑动
 	 * @throws Exception
 	 */
-	public void scroll() throws Exception{
+	public void scroll() throws Exception {
 
 		JSONObject windowSize = driver.getWindowSize();
 		int windowWidth = windowSize.getIntValue("width");
 		int windowHeight = windowSize.getIntValue("height");
 
-		int centerX=(int)windowWidth/2;
-		driver.swipe(centerX,(int)windowHeight-100, centerX, 300, 500);
+		int centerX = (int) windowWidth / 2;
+		driver.drag(centerX, (int) windowHeight - 100, centerX, 100, 0.05D, 10);
 		driver.sleep(1000);
-		driver.swipe(centerX, 300, centerX, (int)windowHeight-100, 500);
+		driver.drag(centerX, 100, centerX, (int) windowHeight - 100, 0.05D, 10);
+		driver.sleep(1000);
 	}
 
+//	/**
+//	 * 点击指定的cell
+//	 * @param index 要点击的cell的index,限可视区域
+//	 */
+//	public void onclickOneCell(int index) throws Exception{
+//		driver.onclickBeanAtIndex(HomeListPageUI.TOP_BAR, index);
+//	}
+
 	/**
-	 * 点击指定的cell
-	 * @param index 要点击的cell的index,限可视区域
+	 * 点击搜索框
+	 *
 	 */
-	public void onclickOneCell(int index) throws Exception{
-		driver.onclickBeanAtIndex(HomeListPageUI.CELL, index);
+	public void onclickSearch () throws Exception {
+//		Element element = driver.elementByXPath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[28]");
+
+		//搜索测试
+		driver.onclickBean(HomeListPageUI.SEARCH);
+		driver.sleep(500);
+
+//		Element element = driver.waitForElement(HomeListPageUI.CART);
+//		element.click();
+//		driver.sleep(1000);
+//		driver.onclickBean(HomeListPageUI.MY_ORDER);
+//		driver.sleep(1000);
 	}
 
 }

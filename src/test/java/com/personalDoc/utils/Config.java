@@ -18,13 +18,13 @@ public class Config {
    public static final String PASSWORD = "password";
    // 目标平台- ios android
    public static final String PLATFORM = "ios";
-   // 是否覆盖安装 3-覆盖安装
+   // 是否覆盖安装 3-覆盖安装,1-删除新装
    public static final String REUSE = "3";
 
    // ios平台相关信息 各参数含义参考 https://macacajs.github.io/macaca/desired-caps.html
    public static final String IOS_PLATFORM_NAME = "iOS";
-   public static final String IOS_DEVICE_NAME = "iPhone 6";
-   public static final String IOS_APP = RootPath + File.separator + "app/ios-app-bootstrap.zip";
+   public static final String IOS_DEVICE_NAME = "iPhone 6s Plus"; //"iPhone 6"
+   public static final String IOS_APP = RootPath + File.separator + "app/PAPersonalDoctor.app";
    public static final String IOS_UDID = "6FB69785-8E9B-4F56-8BC0-DFBE1ECD3F3B";
 
    // 安卓平台相关信息

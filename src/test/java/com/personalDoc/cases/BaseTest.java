@@ -1,6 +1,8 @@
 package com.personalDoc.cases;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,6 +13,7 @@ import macaca.java.biz.ResultGenerator;
 import macaca.java.biz.BaseMacacaClient.PlatformType;
 import com.personalDoc.utils.Config;
 import com.alibaba.fastjson.JSONObject;
+import sun.util.calendar.BaseCalendar;
 
 public class BaseTest {
 
