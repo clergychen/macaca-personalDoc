@@ -13,11 +13,11 @@ public class AlertPage extends BasePage {
         // TODO Auto-generated constructor stub
     }
 
-    public void alert() throws Exception {
-        driver.sleep(1500);
-        driver.onclickBean(AlertPageUI.OK_BTN);
-        driver.sleep(1500);
+    public void locationAlert() throws Exception {
         driver.onclickBean(AlertPageUI.ALLOW_BTN);
+
+
+
     }
 
 }

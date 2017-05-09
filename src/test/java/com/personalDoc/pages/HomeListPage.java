@@ -1,9 +1,6 @@
 package com.personalDoc.pages;
 
-import javax.naming.directory.DirContext;
-
 import com.alibaba.fastjson.JSONObject;
-import macaca.client.commands.Element;
 import macaca.java.biz.BasePage;
 import com.personalDoc.pageuis.HomeListPageUI;
 
@@ -24,10 +21,10 @@ public class HomeListPage extends BasePage{
 		int windowWidth = windowSize.getIntValue("width");
 		int windowHeight = windowSize.getIntValue("height");
 
-		int centerX = (int) windowWidth / 2;
-		driver.drag(centerX, (int) windowHeight - 100, centerX, 100, 0.05D, 10);
+		int centerX = windowWidth / 2;
+		driver.drag(centerX, windowHeight - 100, centerX, 100, 0.05D, 10);
 		driver.sleep(1000);
-		driver.drag(centerX, 100, centerX, (int) windowHeight - 100, 0.05D, 10);
+		driver.drag(centerX, 100, centerX, windowHeight - 100, 0.05D, 10);
 		driver.sleep(1000);
 	}
 
@@ -46,9 +43,8 @@ public class HomeListPage extends BasePage{
 	public void onclickSearch () throws Exception {
 //		Element element = driver.elementByXPath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[28]");
 
-		//搜索测试
+		//点击搜索框
 		driver.onclickBean(HomeListPageUI.SEARCH);
-		driver.sleep(500);
 
 //		Element element = driver.waitForElement(HomeListPageUI.CART);
 //		element.click();

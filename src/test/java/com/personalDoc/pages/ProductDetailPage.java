@@ -2,10 +2,9 @@ package com.personalDoc.pages;
 
 import com.alibaba.fastjson.JSONObject;
 import com.personalDoc.pageuis.ProductDetailPageUI;
-import macaca.client.commands.Element;
-import macaca.client.common.GetElementWay;
 import macaca.java.biz.BasePage;
-import org.junit.Assert;
+import org.testng.Assert;
+
 
 import static org.hamcrest.Matchers.containsString;
 
@@ -23,12 +22,13 @@ public class ProductDetailPage extends BasePage{
         //页面元素展现检查
         String page = driver.source();
         //页头检查
-        Assert.assertThat(page, containsString("商品详情"));
+        Assert.assertEquals(true,page.contains("商品详情"));
+
         //tab页检查
-        Assert.assertThat(page, containsString("商品"));
-        Assert.assertThat(page, containsString("详情"));
+        Assert.assertEquals(true,page.contains("商品"));
+        Assert.assertEquals(true,page.contains("详情"));
         //金额展示检查
-        Assert.assertThat(page, containsString("￥"));
+        Assert.assertEquals(true,page.contains("￥"));
         //切换tab页
         driver.onclickBean(ProductDetailPageUI.TAB_DETAIL);
         driver.onclickBean(ProductDetailPageUI.TAB_PRODUCT);
@@ -49,10 +49,10 @@ public class ProductDetailPage extends BasePage{
         JSONObject windowSize = driver.getWindowSize();
         int windowWidth = windowSize.getIntValue("width");
         int windowHeight = windowSize.getIntValue("height");
-        int centerY = (int) windowHeight / 2;
-        driver.drag((int) windowWidth - 35, centerY, 35, centerY, 0.3, 100);
+        int centerY = windowHeight / 2;
+        driver.drag(windowWidth - 35, centerY, 35, centerY, 0.3, 10);
         driver.sleep(500);
-        driver.drag(35, centerY, (int) windowWidth - 35, centerY, 0.3, 100);
+        driver.drag(35, centerY, windowWidth - 35, centerY, 0.3, 10);
 
     }
 
@@ -62,8 +62,8 @@ public class ProductDetailPage extends BasePage{
         JSONObject windowSize = driver.getWindowSize();
         int windowWidth = windowSize.getIntValue("width");
         int windowHeight = windowSize.getIntValue("height");
-        int centerX = (int) windowWidth / 2;
-        driver.drag(centerX, (int) windowHeight - 100, centerX, 100, 0.3, 100);
+        int centerX = windowWidth / 2;
+        driver.drag(centerX, windowHeight - 100, centerX, 100, 0.3, 100);
     }
 
     public void addToCart() throws Exception{
@@ -71,8 +71,8 @@ public class ProductDetailPage extends BasePage{
         JSONObject windowSize = driver.getWindowSize();
         int windowWidth = windowSize.getIntValue("width");
         int windowHeight = windowSize.getIntValue("height");
-        int centerX = (int)windowWidth/2;
-        int centerY = (int)windowHeight - 10;
+        int centerX = windowWidth /2;
+        int centerY = windowHeight - 10;
 
         driver.tap(centerX, centerY);
     }
@@ -82,8 +82,8 @@ public class ProductDetailPage extends BasePage{
         JSONObject windowSize = driver.getWindowSize();
         int windowWidth = windowSize.getIntValue("width");
         int windowHeight = windowSize.getIntValue("height");
-        int centerX = (int)windowWidth - 10;
-        int centerY = (int)windowHeight - 10;
+        int centerX = windowWidth - 10;
+        int centerY = windowHeight - 10;
 
         driver.tap(centerX, centerY);
         driver.sleep(1000);

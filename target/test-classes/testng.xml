@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="personalDoc" parallel="tests" thread-count="2">
+    <!--<test name="TestGroups" verbose="2">-->
+        <!--<groups>-->
+            <!--<define name="junjun">-->
+                <!--<include name="checkintest"/>-->
+
+            <!--</define>-->
+            <!--<run>-->
+               <!--<include name="junjun"/>-->
+            <!--</run>-->
+        <!--</groups>-->
+        <!--<classes>-->
+            <!--<class name="com.personalDoc.cases.AppCoverInstallTest">-->
+                <!--<methods>-->
+                    <!--<include name="testMethod"/>-->
+                    <!--&lt;!&ndash;<exclude name="functest"/>不支持&ndash;&gt;-->
+                <!--</methods>-->
+            <!--</class>-->
+        <!--</classes>-->
+    <!--</test>-->
+
+    <!--&lt;!&ndash;要带有class的配置才能只执行beforeSutie,先执行class再执行group&ndash;&gt;-->
+    <!--<test name="FirstInstall">-->
+        <!--<classes>-->
+            <!--<class name="com.personalDoc.cases.AppFirstInstallTest">-->
+                <!--<methods>-->
+                    <!--<include name="test"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+        <!--</classes>-->
+    <!--</test>-->
+
+    <!--<test name="IOSTest1">-->
+        <!--<parameter name="port" value="1234" />-->
+        <!--<parameter name="udid" value="1DA3F43B-6CF1-494D-A728-F68B18D7D14F" />-->
+        <!--<classes>-->
+            <!--<class name="com.personalDoc.cases.AppCoverInstallTest" />-->
+        <!--</classes>-->
+    <!--</test>-->
+
+    <!--<test name="AndroidTest2">-->
+        <!--<parameter name="port" value="3457" />-->
+        <!--<parameter name="udid" value="1DA3F43B-6CF1-494D-A728-F68B18D7D14F" />-->
+        <!--<parameter name="reuse" value="2" />-->
+        <!--<classes>-->
+            <!--<class name="com.personalDoc.cases.AppCoverInstallTest" >-->
+                <!--<methods>-->
+                    <!--<include name ="testMethod1"/>-->
+                    <!--<include name ="testMethod2"/>-->
+                    <!--<include name ="testMethod3"/>-->
+                    <!--<include name ="itemDetail"/>-->
+                    <!--<include name ="createOrder"/>-->
+                    <!--<include name ="pay"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+        <!--</classes>-->
+    <!--</test>-->
+
+
+
+
+    <test name="2020Test">
+        <parameter name="port" value="3457" />
+        <!--<parameter name="udid" value="a56cb0f7" />-->
+        <parameter name="udid" value="1DA3F43B-6CF1-494D-A728-F68B18D7D14F" />
+        <parameter name="reuse" value="2" />
+        <classes>
+            <class name="com.personalDoc.cases.Trading2020Test" >
+                <methods>
+                <include name="step1home"/>
+                <include name="step2search"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

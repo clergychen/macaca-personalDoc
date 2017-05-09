@@ -14,11 +14,11 @@ public class NewGuyPage extends BasePage {
     }
 
     public void newguy (String nickname) throws Exception {
-        driver.inputBean(NewGuyPageUI.NICK_NAME, nickname);
-        driver.sleep(500);
-        //点击发送验证码
+        //选择性别
         driver.onclickBean(NewGuyPageUI.WOMAN_BTN);
-        driver.sleep(500);
-        driver.onclickBean(NewGuyPageUI.NEXT_BTN);
+        driver.onclickBean(NewGuyPageUI.DONE_BTN);
+        //
+//        driver.inputBean(NewGuyPageUI.NICK_NAME, nickname);
+//        driver.sleep(500);
     }
 }

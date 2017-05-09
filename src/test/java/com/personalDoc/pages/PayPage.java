@@ -20,11 +20,11 @@ public class PayPage extends BasePage {
         JSONObject windowSize = driver.getWindowSize();
         int windowWidth = windowSize.getIntValue("width");
         int windowHeight = windowSize.getIntValue("height");
-        int centerX = (int) windowWidth / 2;
-        driver.drag(centerX, (int) windowHeight - 100, centerX, 100, 0.3, 100);
-
-
+        int centerX1 = windowWidth / 2;
+        driver.drag(centerX1, windowHeight - 100, centerX1, 100, 0.3, 100);
+        //选中模拟支付
         driver.onclickBean(PayPageUI.SIMULATE_PAY);
+        driver.sleep(500);
         driver.onclickBean(PayPageUI.CONFIRM_PAY);
         driver.sleep(500);
         driver.onclickBean(PayPageUI.PAY);

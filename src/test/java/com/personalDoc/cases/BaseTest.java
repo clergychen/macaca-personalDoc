@@ -1,19 +1,19 @@
 package com.personalDoc.cases;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Random;
 
-import org.junit.After;
-import org.junit.Before;
-
+import com.personalDoc.pages.*;
+import com.personalDoc.pageuis.*;
 import macaca.java.biz.BaseErrorType;
 import macaca.java.biz.BaseMacacaClient;
 import macaca.java.biz.ResultGenerator;
 import macaca.java.biz.BaseMacacaClient.PlatformType;
 import com.personalDoc.utils.Config;
 import com.alibaba.fastjson.JSONObject;
-import sun.util.calendar.BaseCalendar;
+import org.testng.Assert;
+import org.testng.annotations.*;
+
 
 public class BaseTest {
 
@@ -22,7 +22,19 @@ public class BaseTest {
 
 	BaseMacacaClient driver= new BaseMacacaClient();
 
-	@Before
+	String port;
+	String udid;
+	String reuse;
+	@Parameters({"port","udid","reuse"})
+
+	@BeforeTest
+	public void beforeSuite(String port, String udid,String reuse){
+		this.port = port;
+		this.udid = udid;
+		this.reuse = reuse;
+	}
+
+	@BeforeClass
 	public void setUp() throws Exception {
 
 		// 清除日志记录
@@ -46,20 +58,200 @@ public class BaseTest {
 			//创建安卓实例
 			props.put("app", Config.ADR_APP);
 			props.put("platformName", Config.ADR_PLATFORM_NAME);
+//			props.put("udid", Config.ADR_UDID);
 			driver.setCurPlatform(PlatformType.ANDROID);
 		}
 
 		// 覆盖安装
-		props.put("reuse", Config.REUSE);
+		props.put("reuse", reuse);
+		props.put("udid",udid);
 
 		JSONObject desiredCapabilities = new JSONObject();
+		desiredCapabilities.put("host", "10.0.6.40"); // custom server  host
+		desiredCapabilities.put("port", Integer.parseInt(port)); // custom server  port
 		desiredCapabilities.put("desiredCapabilities", props);
+			if(port.equals("3457"))
+			{
+				Thread.sleep(2000);
+			}
 		driver.initDriver(desiredCapabilities);
 
+
+		/////////////////////////////商城初始化逻辑,新装app和覆盖安装情况下操作到商城首页/////////////////////////////
+		if (reuse.equals("1")) {
+			System.out.println("卸载安装了");
+
+			//数据准备
+			//搞个随机数
+			Random random = new Random(System.currentTimeMillis());
+			int randInt = random.nextInt(900000) + 100000;
+			//定义登陆唯一
+			String receiverNo = String.valueOf(randInt);
+			System.out.println("手机号码=13564" + receiverNo);
+			String phoneNum = "13564" + receiverNo;
+			// 欢迎页
+			WelcomePage welcomePage = new WelcomePage("欢迎页");
+			welcomePage.setDriver(driver);
+			if (welcomePage.hasPageShown(WelcomePageUI.WEL_VIEW)) {
+				saveScreen(welcomePage.pageDesc);
+				ResultGenerator.loadPageSucc(welcomePage);
+
+				// 滑动
+				welcomePage.scroll();
+				driver.sleep(2000);
+			} else {
+				ResultGenerator.loadPageFail(welcomePage);
+
+			}
+
+			// 处理登录
+			LoginPage loginPage = new LoginPage("登录页");
+			loginPage.setDriver(driver);
+			if (loginPage.hasPageShown(LoginPageUI.VERIFY_BTN)) {
+				saveScreen(loginPage.pageDesc);
+				ResultGenerator.loadPageSucc(loginPage);
+
+				//登陆参数
+				loginPage.login(phoneNum, "666666");
+			} else {
+				ResultGenerator.loadPageFail(loginPage);
+
+			}
+
+			// locationAlert页
+			AlertPage alertPage = new AlertPage("定位选择弹出框");
+			alertPage.setDriver(driver);
+			if (alertPage.hasPageShown(AlertPageUI.ALERT_TEXT)) {
+				saveScreen(alertPage.pageDesc);
+				ResultGenerator.loadPageSucc(alertPage);
+				alertPage.locationAlert();
+				driver.sleep(500);
+			}
+			if (alertPage.hasPageShown(AlertPageUI.ALERT_TEXT)) {
+				alertPage.locationAlert();
+			} else {
+				ResultGenerator.loadPageFail(alertPage);
+
+			}
+
+			// 任意门
+			AnyDoorPage anyDoorPage = new AnyDoorPage("任意门Alert");
+			anyDoorPage.setDriver(driver);
+			if (anyDoorPage.hasPageShown(AnyDoorPageUI.ANY_DOOR)) {
+				saveScreen(anyDoorPage.pageDesc);
+				ResultGenerator.loadPageSucc(anyDoorPage);
+				//
+				anyDoorPage.leaveMe();
+			}
+
+			// 信息收集(新用户)
+			NewGuyPage newguyPage = new NewGuyPage("信息收集页");
+			newguyPage.setDriver(driver);
+			if (newguyPage.hasPageShown(NewGuyPageUI.WELCOME)) {
+				saveScreen(newguyPage.pageDesc);
+				ResultGenerator.loadPageSucc(newguyPage);
+				//创建用户
+				String user = "uitest" + phoneNum;
+				newguyPage.newguy(user);
+			} else {
+				ResultGenerator.loadPageFail(newguyPage);
+			}
+
+			// 顶通页(新用户)
+			DingTongPage dingtongPage = new DingTongPage("顶通页");
+			dingtongPage.setDriver(driver);
+			if (dingtongPage.hasPageShown(DingTongPageUI.DINGTONG_BACK)) {
+				saveScreen(dingtongPage.pageDesc);
+				ResultGenerator.loadPageSucc(dingtongPage);
+				//
+				dingtongPage.dingtong();
+			} else {
+				ResultGenerator.loadPageFail(dingtongPage);
+			}
+
+			// 发现新版本页
+			FindNewVersionPage findNewVersionPage = new FindNewVersionPage("发现新版本页");
+			findNewVersionPage.setDriver(driver);
+			if (findNewVersionPage.hasPageShown(FindNewVersionPageUI.UPDATETIP_PAGE)) {
+				saveScreen(findNewVersionPage.pageDesc);
+				ResultGenerator.loadPageSucc(findNewVersionPage);
+				//
+				findNewVersionPage.updateLater();
+			} else {
+				ResultGenerator.loadPageFail(findNewVersionPage);
+			}
+
+			// 主客首页
+			ZhuKeHomePage zhukehomePage = new ZhuKeHomePage("主客首页");
+			zhukehomePage.setDriver(driver);
+			if (zhukehomePage.hasPageShown(ZhuKeHomePageUI.MALL_TAB)) {
+				saveScreen(zhukehomePage.pageDesc);
+				ResultGenerator.loadPageSucc(zhukehomePage);
+				// 进入商城首页
+				zhukehomePage.tabMall();
+//            saveScreen("进入商城首页");
+			} else {
+				// 首页没有加载成功，后面的用例都不用执行了，return
+				ResultGenerator.loadPageFail(zhukehomePage);
+				return;
+			}
+		}
+
+		else if (reuse.equals("2")) {
+			System.out.println("覆盖安装了");
+			// 任意门
+			AnyDoorPage anyDoorPage = new AnyDoorPage("任意门Alert");
+			anyDoorPage.setDriver(driver);
+			if (anyDoorPage.hasPageShown(AnyDoorPageUI.ANY_DOOR)) {
+				saveScreen(anyDoorPage.pageDesc);
+				ResultGenerator.loadPageSucc(anyDoorPage);
+				//
+				anyDoorPage.leaveMe();
+			}
+
+			// 顶通页
+			DingTongPage dingtongPage = new DingTongPage("顶通页");
+			dingtongPage.setDriver(driver);
+			if (dingtongPage.hasPageShown(DingTongPageUI.DINGTONG_BACK)) {
+				saveScreen(dingtongPage.pageDesc);
+				ResultGenerator.loadPageSucc(dingtongPage);
+				//
+				dingtongPage.dingtong();
+			}
+
+			// 发现新版本页
+			FindNewVersionPage findNewVersionPage = new FindNewVersionPage("发现新版本页");
+			findNewVersionPage.setDriver(driver);
+			if (findNewVersionPage.hasPageShown(FindNewVersionPageUI.UPDATETIP_PAGE)) {
+				saveScreen(findNewVersionPage.pageDesc);
+				ResultGenerator.loadPageSucc(findNewVersionPage);
+				//
+				findNewVersionPage.updateLater();
+			} else {
+				ResultGenerator.loadPageFail(findNewVersionPage);
+			}
+
+			// 主客首页
+			ZhuKeHomePage zhukehomePage = new ZhuKeHomePage("主客首页");
+			zhukehomePage.setDriver(driver);
+			if (zhukehomePage.hasPageShown(ZhuKeHomePageUI.MALL_TAB)) {
+				driver.waitForElement(ZhuKeHomePageUI.ME);
+				saveScreen(zhukehomePage.pageDesc);
+				ResultGenerator.loadPageSucc(zhukehomePage);
+				// 进入商城首页
+				zhukehomePage.tabMall();
+				driver.sleep(1000);
+			} else {
+				// 首页没有加载成功，后面的用例都不用执行了，return
+				ResultGenerator.loadPageFail(zhukehomePage);
+				Assert.fail();
+				return;
+			}
+		}
 	}
 
 
-	@After
+	@AfterClass
 	public void tearDown() throws Exception {
 
 		try {

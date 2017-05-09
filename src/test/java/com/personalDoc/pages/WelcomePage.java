@@ -24,18 +24,14 @@ public class WelcomePage extends BasePage {
         int windowWidth = windowSize.getIntValue("width");
         int windowHeight = windowSize.getIntValue("height");
 
-        int centerY = (int) windowHeight / 2;
+        int centerY = windowHeight / 2;
         driver.sleep(1500);
-        driver.drag((int)windowWidth-10, centerY, 50, centerY, 0.5, 100);
+        driver.drag(windowWidth -10, centerY, 50, centerY, 0.5, 20);
         driver.sleep(1500);
-        driver.drag((int)windowWidth-10, centerY, 50, centerY, 0.5, 100);
+        driver.drag(windowWidth -10, centerY, 50, centerY, 0.5, 20);
         driver.sleep(1500);
-        driver.drag((int)windowWidth-10, centerY, 50, centerY, 0.5, 100);
-        driver.sleep(1500);
-        driver.drag((int)windowWidth-10, centerY, 50, centerY, 0.5, 100);
-        driver.sleep(2000);
-        driver.onclickBean(WelcomePageUI.IN_BTN);
-//        driver.onclickBean(WelcomePageUI.SKIP_BTN);
+//        driver.onclickBean(WelcomePageUI.IN_BTN);
+        driver.onclickBean(WelcomePageUI.SKIP_BTN);
         driver.sleep(1000);
     }
 

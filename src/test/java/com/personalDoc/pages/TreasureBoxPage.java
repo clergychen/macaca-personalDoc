@@ -2,9 +2,7 @@ package com.personalDoc.pages;
 
 import com.personalDoc.pageuis.TreasureBoxPageUI;
 import macaca.java.biz.BasePage;
-import org.junit.Assert;
 
-import static org.hamcrest.Matchers.containsString;
 
 /**
  * Created by chenjun on 17/2/20.

@@ -2,7 +2,7 @@ package com.personalDoc.pages;
 
 import com.personalDoc.pageuis.AddNewAddressPageUI;
 import macaca.java.biz.BasePage;
-import org.junit.Assert;
+import org.testng.Assert;
 
 import static org.hamcrest.Matchers.containsString;
 
@@ -19,12 +19,13 @@ public class AddNewAddressPage extends BasePage {
     public void addAddress() throws Exception {
         //页面元素展现检查
         String page = driver.source();
-        Assert.assertThat(page, containsString("新建地址"));
-        Assert.assertThat(page, containsString("收货人"));
-        Assert.assertThat(page, containsString("手机号码"));
-        Assert.assertThat(page, containsString("所在地区"));
-        Assert.assertThat(page, containsString("收货地址"));
-        Assert.assertThat(page, containsString("保存"));
+        Assert.assertEquals(page, containsString("新建地址"));
+        Assert.assertEquals(page, containsString("收货人"));
+        Assert.assertEquals(page, containsString("手机号码"));
+        Assert.assertEquals(page, containsString("所在地区"));
+        Assert.assertEquals(page, containsString("收货地址"));
+        Assert.assertEquals(page, containsString("保存"));
+
         //填写收货人
         driver.onclickBean(AddNewAddressPageUI.CONSIGNEE);
         driver.inputBean(AddNewAddressPageUI.CONSIGNEE,"uitest");

@@ -3,16 +3,9 @@ package com.personalDoc.cases;
 import com.personalDoc.pages.*;
 import com.personalDoc.pageuis.*;
 import macaca.client.common.GetElementWay;
-import org.junit.Assert;
-import org.junit.Test;
-
 import macaca.java.biz.ResultGenerator;
-import sun.util.calendar.BaseCalendar;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+import org.testng.annotations.Test;
+import org.testng.Assert;
 
 import static org.hamcrest.Matchers.containsString;
 
@@ -21,37 +14,70 @@ import static org.hamcrest.Matchers.containsString;
  */
 public class AppCoverInstallTest extends BaseTest {
 
+//    @Test(groups = "functest")
     @Test
-    public void test() throws Exception {
-        // 主客首页
-        ZhuKeHomePage zhukehomePage = new ZhuKeHomePage("主客首页");
-        zhukehomePage.setDriver(driver);
-        if (zhukehomePage.hasPageShown(ZhuKeHomePageUI.MALL_TAB)) {
-            saveScreen(zhukehomePage.pageDesc);
-            ResultGenerator.loadPageSucc(zhukehomePage);
-            // 进入商城首页
-            zhukehomePage.tabMall();
-            driver.sleep(1000);
-        } else {
-            // 首页没有加载成功，后面的用例都不用执行了，return
-            ResultGenerator.loadPageFail(zhukehomePage);
-            return;
+    //准备工作跳转商城
+    public void testMethod1() throws Exception {
+        // 任意门
+        AnyDoorPage anyDoorPage = new AnyDoorPage("任意门Alert");
+        anyDoorPage.setDriver(driver);
+        if (anyDoorPage.hasPageShown(AnyDoorPageUI.ANY_DOOR)) {
+            saveScreen(anyDoorPage.pageDesc);
+            ResultGenerator.loadPageSucc(anyDoorPage);
+            //
+            anyDoorPage.leaveMe();
         }
 
         // 顶通页
         DingTongPage dingtongPage = new DingTongPage("顶通页");
         dingtongPage.setDriver(driver);
-        if (dingtongPage.hasPageShown(DingTongPageUI.DINGTONG_PAGE)) {
+        if (dingtongPage.hasPageShown(DingTongPageUI.DINGTONG_BACK)) {
             saveScreen(dingtongPage.pageDesc);
             ResultGenerator.loadPageSucc(dingtongPage);
             //
             dingtongPage.dingtong();
         }
 
+        // 发现新版本页
+        FindNewVersionPage findNewVersionPage = new FindNewVersionPage("发现新版本页");
+        findNewVersionPage.setDriver(driver);
+        if (findNewVersionPage.hasPageShown(FindNewVersionPageUI.UPDATETIP_PAGE)) {
+            saveScreen(findNewVersionPage.pageDesc);
+            ResultGenerator.loadPageSucc(findNewVersionPage);
+            //
+            findNewVersionPage.updateLater();
+        } else {
+            ResultGenerator.loadPageFail(findNewVersionPage);
+        }
+
+        // 主客首页
+        ZhuKeHomePage zhukehomePage = new ZhuKeHomePage("主客首页");
+        zhukehomePage.setDriver(driver);
+        if (zhukehomePage.hasPageShown(ZhuKeHomePageUI.MALL_TAB)) {
+            driver.waitForElement(ZhuKeHomePageUI.ME);
+            saveScreen(zhukehomePage.pageDesc);
+            ResultGenerator.loadPageSucc(zhukehomePage);
+            // 进入商城首页
+            zhukehomePage.tabMall();
+            driver.sleep(5000);
+        } else {
+            // 首页没有加载成功，后面的用例都不用执行了，return
+            ResultGenerator.loadPageFail(zhukehomePage);
+            Assert.fail();
+            return;
+        }
+    }
+
+    @Test
+//    @Test(groups = {"functest", "checkintest"})
+    //首页检查跳转搜索
+    public void testMethod2() throws Exception {
         // 商城首页
         HomeListPage homeListPage = new HomeListPage("商城首页");
         homeListPage.setDriver(driver);
+//        if (homeListPage.hasPageShown(HomeListPageUI.MY_ORDER)&&homeListPage.hasPageShown(HomeListPageUI.SEARCH)) {
         if (homeListPage.hasPageShown(HomeListPageUI.MY_ORDER)) {
+
             saveScreen(homeListPage.pageDesc);
             ResultGenerator.loadPageSucc(homeListPage);
             // 上下滑动
@@ -60,14 +86,19 @@ public class AppCoverInstallTest extends BaseTest {
 
             //点击搜索框
             homeListPage.onclickSearch();
-            driver.sleep(1000);
+            driver.waitForElement(SearchPageUI.HOT_SEARCH);
         } else {
             // 商城首页没有加载成功
             ResultGenerator.loadPageFail(homeListPage);
+            Assert.fail("商城首页加载失败");
             return;
         }
+    }
 
-
+    @Test
+//    @Test(dependsOnMethods = {"testMethod2"},groups = {"functest"})
+    //搜索商品跳转商详
+    public void testMethod3() throws Exception {
         // 商城搜索页
         SearchPage searchPage = new SearchPage("搜索页");
         searchPage.setDriver(driver);
@@ -83,7 +114,11 @@ public class AppCoverInstallTest extends BaseTest {
             ResultGenerator.loadPageFail(searchPage);
             return;
         }
+    }
 
+    @Test
+//    @Test(dependsOnMethods = {"testMethod3"})
+    public void itemDetail() throws Exception {
         // 商详页
         ProductDetailPage productDetailPage = new ProductDetailPage("商详页");
         productDetailPage.setDriver(driver);
@@ -96,17 +131,21 @@ public class AppCoverInstallTest extends BaseTest {
             //主图测试
             productDetailPage.cross();
             //上下滑动
-            homeListPage.scroll();
-            //
-            productDetailPage.scrollAgain();
+//            homeListPage.scroll();
+
+//            productDetailPage.scrollAgain();
             //点击"立即购买"
             productDetailPage.buy();
         } else {
             // 商详页没有加载成功
-            ResultGenerator.loadPageFail(searchPage);
+            ResultGenerator.loadPageFail(productDetailPage);
             return;
         }
+    }
 
+    @Test
+//    @Test(dependsOnMethods = {"itemDetail"})
+    public void createOrder() throws Exception {
         // 订单填写页
         OrderFillPage orderFillPage = new OrderFillPage("订单填写页");
         orderFillPage.setDriver(driver);
@@ -143,7 +182,11 @@ public class AppCoverInstallTest extends BaseTest {
             ResultGenerator.loadPageFail(orderFillPage);
             return;
         }
+    }
 
+    @Test
+//    @Test(dependsOnMethods = {"createOrder"})
+    public void pay() throws Exception {
         // 健康支付页
         PayPage payPage = new PayPage("健康支付页");
         payPage.setDriver(driver);
@@ -173,7 +216,7 @@ public class AppCoverInstallTest extends BaseTest {
         }
 
         // 付款结果页
-        PayResultPage payResultPage = new PayResultPage("健康支付页");
+        PayResultPage payResultPage = new PayResultPage("付款结果页");
         payResultPage.setDriver(driver);
         if (treasureBoxPage.hasPageShown(PayResultPageUI.PAY_RLT)) {
             saveScreen(payResultPage.pageDesc);
@@ -231,18 +274,44 @@ public class AppCoverInstallTest extends BaseTest {
             driver.onclickBean(PayResultPageUI.BACK_BTN);
 
             //关闭宝箱页
+            driver.waitForElement(TreasureBoxPageUI.CLOSE_BTN);
             treasureBoxPage.boxCheck();
             //完成购买
             driver.onclickBean(PayResultPageUI.DONE);
-            driver.sleep(100);
+            driver.sleep(1000);
             //返回商城首页
             String page = driver.source();
-            Assert.assertThat(page, containsString("健康商城"));
-
+            Assert.assertEquals(true, page.contains("健康商城"));
         } else {
             // 付款结果页没有加载成功
             ResultGenerator.loadPageFail(payResultPage);
             return;
         }
     }
+
+//    public class NewTest {
+//        @Test(dataProvider = "dp")
+//        public void f(Integer n, String s) {
+//            System.out.println("第一个参数是" + n + ",第二个参数是" + s);
+//        }
+//
+//        @DataProvider
+//        public Object[][] dp() {
+//            return new Object[][]{
+//                    new Object[]{1, "a"},
+//                    new Object[]{2, "b"},
+//            };
+//        }
+//
+//        @BeforeTest
+//        public void beforeTest() {
+//            System.out.println("------------开始测试------------");
+//        }
+//
+//        @AfterTest
+//        public void afterTest() {
+//            System.out.println("------------结束测试------------");
+//        }
+//
+//    }
 }
