@@ -22,9 +22,9 @@ public class HomeListPage extends BasePage{
 		int windowHeight = windowSize.getIntValue("height");
 
 		int centerX = windowWidth / 2;
-		driver.drag(centerX, windowHeight - 100, centerX, 100, 0.05D, 10);
+		driver.drag(centerX, windowHeight - 300, centerX, 100, 1);
 		driver.sleep(1000);
-		driver.drag(centerX, 100, centerX, windowHeight - 100, 0.05D, 10);
+		driver.drag(centerX, 300, centerX, windowHeight - 100, 1);
 		driver.sleep(1000);
 	}
 

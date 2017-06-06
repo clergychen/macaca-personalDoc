@@ -2,7 +2,6 @@ package com.personalDoc.cases;
 
 import com.personalDoc.pages.*;
 import com.personalDoc.pageuis.*;
-import macaca.client.common.GetElementWay;
 import macaca.java.biz.ResultGenerator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,9 +11,14 @@ import org.testng.annotations.Test;
  */
 public class Trading2020Test extends BaseTest {
 
+
+
     @Test
     //首页检查跳转搜索
     public void step1home() throws Exception {
+        //进入商城首页的准备工作
+        initMall();
+        driver.sleep(1000);
         // 商城首页
         HomeListPage homeListPage = new HomeListPage("商城首页");
         homeListPage.setDriver(driver);
@@ -28,10 +32,11 @@ public class Trading2020Test extends BaseTest {
 
             //点击搜索框
             homeListPage.onclickSearch();
+            driver.sleep(2000);
         } else {
             // 商城首页没有加载成功
             ResultGenerator.loadPageFail(homeListPage);
-//            Assert.fail("商城首页加载失败");
+            Assert.fail("商城首页加载失败");
             return;
         }
     }
@@ -42,16 +47,27 @@ public class Trading2020Test extends BaseTest {
         // 商城搜索页
         SearchPage searchPage = new SearchPage("搜索页");
         searchPage.setDriver(driver);
-        if (searchPage.hasPageShown(SearchPageUI.HOT_SEARCH)) {
+        driver.waitForElement(SearchPageUI.SEARCH_BAR);
+        if (searchPage.hasPageShown(SearchPageUI.HOT_SEARCH)&&searchPage.hasPageShown(SearchPageUI.SEARCH_BAR)) {
             saveScreen(searchPage.pageDesc);
             ResultGenerator.loadPageSucc(searchPage);
-
             //点击搜索框
+            driver.isElementExistAfterWaiting(SearchPageUI.SEARCH_BAR);
             searchPage.searchOneItem("冈本");
             driver.sleep(1000);
-        } else {
+        }
+//        if (searchPage.hasPageShown(SearchPageUI.FIRST_SEARCH_BAR)) {
+//            saveScreen(searchPage.pageDesc);
+//            ResultGenerator.loadPageSucc(searchPage);
+//            //点击搜索框
+//            driver.isElementExistAfterWaiting(SearchPageUI.FIRST_SEARCH_BAR);
+//            searchPage.firstSearch("冈本");
+//            driver.sleep(1000);
+//        }
+        else {
             // 搜索页没有加载成功
             ResultGenerator.loadPageFail(searchPage);
+            Assert.fail("搜索页没有加载成功");
             return;
         }
     }
@@ -61,7 +77,7 @@ public class Trading2020Test extends BaseTest {
         // 商详页
         ProductDetailPage productDetailPage = new ProductDetailPage("商详页");
         productDetailPage.setDriver(driver);
-        if (productDetailPage.hasPageShown(ProductDetailPageUI.PRODUCT_MAIN_PIC)) {
+        if (productDetailPage.hasPageShown(ProductDetailPageUI.TOP_BAR)) {
             saveScreen(productDetailPage.pageDesc);
             ResultGenerator.loadPageSucc(productDetailPage);
 
@@ -69,14 +85,26 @@ public class Trading2020Test extends BaseTest {
             productDetailPage.detailCheck();
             //主图测试
             productDetailPage.cross();
-            //上下滑动
-//            homeListPage.scroll();
+            //下滑动到店铺页
+            for (int i = 0; i < 2; i++) {
+                scrollDown();
+                if (productDetailPage.hasPageShown(ProductDetailPageUI.SHOP_PAGE)){
+                    break;
+                }
+            }
+            driver.onclickBean(ProductDetailPageUI.SHOP_PAGE);
+
 //            productDetailPage.scrollAgain();
             //点击"立即购买"
             productDetailPage.buy();
+//            productDetailPage.addToCart();
+//            driver.waitForElement(ProductDetailPageUI.CART);
+//            productDetailPage.Cart();
+
         } else {
             // 商详页没有加载成功
             ResultGenerator.loadPageFail(productDetailPage);
+            Assert.fail("商详页没有加载成功");
             return;
         }
     }
@@ -90,9 +118,21 @@ public class Trading2020Test extends BaseTest {
             saveScreen(orderFillPage.pageDesc);
             ResultGenerator.loadPageSucc(orderFillPage);
             //
-            String discNameCommit = driver.getElement(GetElementWay.XPATH, "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeStaticText[1]")
-                    .getText();
-            if (discNameCommit.equals("请添加收货地址")) {
+            String discNameCommit = null;
+//            if (Config.PLATFORM == "ios"){
+//                discNameCommit = driver.getElement(GetElementWay.XPATH, "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeStaticText[1]")
+//                        .getText();
+//            }
+//            else if(Config.PLATFORM == "android"){
+//                //discNameCommit = driver.getElement(GetElementWay.XPATH, "//android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[1]/android.view.View[1]/android.view.View[2]/android.view.View[1]/android.view.View[1]").getText();
+//                discNameCommit = driver.getElement(GetElementWay.NAME, "请添加收货地址").getText();
+//            }
+
+//            driver.waitForElement(OrderFillPageUI.ADD_ADDRESS).click();
+            System.out.println("哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦"+discNameCommit);
+
+//            if (discNameCommit.equals("请添加收货地址")) {
+            if (driver.waitForElement(OrderFillPageUI.ADD_ADDRESS).isDisplayed()){
                 System.out.println("旭哥旭哥旭哥旭哥旭哥旭哥旭哥旭哥旭哥旭哥");
                 // 新建地址页
                 //点添加收货地址
@@ -117,6 +157,7 @@ public class Trading2020Test extends BaseTest {
         } else {
             // 订单填写页没有加载成功
             ResultGenerator.loadPageFail(orderFillPage);
+            Assert.fail("订单填写页没有加载成功");
             return;
         }
     }
@@ -132,8 +173,9 @@ public class Trading2020Test extends BaseTest {
             //
             payPage.pay();
         } else {
-            // 订单填写页没有加载成功
+            // 健康支付页没有加载成功
             ResultGenerator.loadPageFail(payPage);
+            Assert.fail("健康支付页没有加载成功");
             return;
         }
 
@@ -146,8 +188,9 @@ public class Trading2020Test extends BaseTest {
             //
             treasureBoxPage.boxCheck();
         } else {
-            // 订单填写页没有加载成功
+            // 步步夺宝宝箱掉落页没有加载成功
             ResultGenerator.loadPageFail(treasureBoxPage);
+            Assert.fail("步步夺宝宝箱掉落页页没有加载成功");
             return;
         }
 
@@ -173,6 +216,7 @@ public class Trading2020Test extends BaseTest {
         } else {
             // 付款结果页没有加载成功
             ResultGenerator.loadPageFail(payResultPage);
+            Assert.fail("返回健康商城没有加载成功");
             return;
         }
     }

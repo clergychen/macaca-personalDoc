@@ -16,7 +16,7 @@ public class DingTongPage extends BasePage {
     public void dingtong() throws Exception {
         //切换到"选择你感兴趣的内容"页面
         //关闭顶通页
-        driver.onclickBean(DingTongPageUI.CLOSE_BTN);
+        driver.onclickBean(DingTongPageUI.DINGTONG_BACK);
         driver.sleep(500);
     }
 

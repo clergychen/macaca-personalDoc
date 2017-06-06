@@ -50,9 +50,9 @@ public class ProductDetailPage extends BasePage{
         int windowWidth = windowSize.getIntValue("width");
         int windowHeight = windowSize.getIntValue("height");
         int centerY = windowHeight / 2;
-        driver.drag(windowWidth - 35, centerY, 35, centerY, 0.3, 10);
+        driver.drag(windowWidth - 35, centerY, 35, centerY, 0.3);
         driver.sleep(500);
-        driver.drag(35, centerY, windowWidth - 35, centerY, 0.3, 10);
+        driver.drag(35, centerY, windowWidth - 35, centerY, 0.3);
 
     }
 
@@ -63,18 +63,7 @@ public class ProductDetailPage extends BasePage{
         int windowWidth = windowSize.getIntValue("width");
         int windowHeight = windowSize.getIntValue("height");
         int centerX = windowWidth / 2;
-        driver.drag(centerX, windowHeight - 100, centerX, 100, 0.3, 100);
-    }
-
-    public void addToCart() throws Exception{
-        // 点加入购物车
-        JSONObject windowSize = driver.getWindowSize();
-        int windowWidth = windowSize.getIntValue("width");
-        int windowHeight = windowSize.getIntValue("height");
-        int centerX = windowWidth /2;
-        int centerY = windowHeight - 10;
-
-        driver.tap(centerX, centerY);
+        driver.drag(centerX, windowHeight - 100, centerX, 100, 0.3);
     }
 
     public void buy() throws Exception{
@@ -87,5 +76,34 @@ public class ProductDetailPage extends BasePage{
 
         driver.tap(centerX, centerY);
         driver.sleep(1000);
+    }
+
+    public void buyByName() throws Exception{
+        driver.waitForElement(ProductDetailPageUI.BUY);
+        driver.onclickBean(ProductDetailPageUI.BUY);
+    }
+
+    public void addToCart() throws Exception{
+        // 点加入购物车
+        JSONObject windowSize = driver.getWindowSize();
+        int windowWidth = windowSize.getIntValue("width");
+        int windowHeight = windowSize.getIntValue("height");
+        int centerX = windowWidth /2;
+        int centerY = windowHeight - 10;
+
+        driver.tap(centerX, centerY);
+        driver.sleep(500);
+    }
+
+    public void Cart() throws Exception{
+        // 点购物车
+        JSONObject windowSize = driver.getWindowSize();
+        int windowWidth = windowSize.getIntValue("width");
+        int windowHeight = windowSize.getIntValue("height");
+        int centerX = windowWidth /4;
+        int centerY = windowHeight - 10;
+
+        driver.tap(centerX, centerY);
+        driver.sleep(500);
     }
 }

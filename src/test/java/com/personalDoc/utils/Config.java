@@ -17,9 +17,9 @@ public class Config {
    // 密码
    public static final String PASSWORD = "password";
    // 目标平台- ios android
-   public static final String PLATFORM = "ios";
-   // 是否覆盖安装 3-覆盖安装,1-删除新装;;;;;0: 清楚数据并重装 app。 1: (默认) 卸载并重装 app。 2: 仅重装 app。 3: 在测试结束后保持 app 状态
-   public static final String REUSE = "3";
+   public static final String PLATFORM = "android";
+   // 0: 清楚数据并重装 app。 1: (默认) 卸载并重装 app。 2: 仅重装 app。 3: 在测试结束后保持 app 状态
+   public static final String REUSE = "2";
 
    // ios平台相关信息 各参数含义参考 https://macacajs.github.io/macaca/desired-caps.html
    public static final String IOS_PLATFORM_NAME = "iOS";

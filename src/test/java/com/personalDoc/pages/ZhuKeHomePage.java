@@ -25,7 +25,9 @@ public class ZhuKeHomePage extends BasePage {
     /**
      * 点击商城 tab
      */
-    public void tabMall(){driver.onclickBean(ZhuKeHomePageUI.MALL_TAB);}
+    public void tabMall(){
+        driver.onclickBean(ZhuKeHomePageUI.MALL_TAB);
+    }
     /**
      * 点击消息 tab
      */

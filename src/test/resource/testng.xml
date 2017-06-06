@@ -61,16 +61,23 @@
 
 
 
-    <test name="2020Test">
-        <parameter name="port" value="3457" />
-        <!--<parameter name="udid" value="a56cb0f7" />-->
-        <parameter name="udid" value="1DA3F43B-6CF1-494D-A728-F68B18D7D14F" />
+    <test name="2020Test" preserve-order="true">
+        <parameter name="port" value="3456" />
+        <!--服务器的iphone7模拟器-->
+        <!--<parameter name="udid" value="1DA3F43B-6CF1-494D-A728-F68B18D7D14F" />-->
+        <!-- 我的电脑iphone6模拟器 -->
+        <!--<parameter name="udid" value="20789112-57FF-496E-8433-C8CD0A45A893" />-->
+        <!--4c53c0e7    a56cb0f7   022SSE14B7002394-->
+        <parameter name="udid" value="4c53c0e7" />
         <parameter name="reuse" value="2" />
         <classes>
             <class name="com.personalDoc.cases.Trading2020Test" >
                 <methods>
                 <include name="step1home"/>
                 <include name="step2search"/>
+                <include name="step3itemDetail"/>
+                <!--<include name="step4createOrder"/>-->
+                <!--<include name="step5pay"/>-->
                 </methods>
             </class>
         </classes>
