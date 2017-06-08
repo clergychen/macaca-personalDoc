@@ -21,7 +21,8 @@ public class PayPage extends BasePage {
         int windowWidth = windowSize.getIntValue("width");
         int windowHeight = windowSize.getIntValue("height");
         int centerX1 = windowWidth / 2;
-        driver.drag(centerX1, windowHeight - 100, centerX1, 100, 0.3);
+        driver.drag(centerX1, windowHeight - 200, centerX1, 100, 1);
+
         //选中模拟支付
         driver.onclickBean(PayPageUI.SIMULATE_PAY);
         driver.sleep(500);

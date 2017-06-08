@@ -2,6 +2,8 @@ package com.personalDoc.cases;
 
 import com.personalDoc.pages.*;
 import com.personalDoc.pageuis.*;
+import com.personalDoc.utils.Config;
+import macaca.client.common.GetElementWay;
 import macaca.java.biz.ResultGenerator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -10,8 +12,6 @@ import org.testng.annotations.Test;
  * Created by chenjun on 17/4/25.
  */
 public class Trading2020Test extends BaseTest {
-
-
 
     @Test
     //首页检查跳转搜索
@@ -48,7 +48,7 @@ public class Trading2020Test extends BaseTest {
         SearchPage searchPage = new SearchPage("搜索页");
         searchPage.setDriver(driver);
         driver.waitForElement(SearchPageUI.SEARCH_BAR);
-        if (searchPage.hasPageShown(SearchPageUI.HOT_SEARCH)&&searchPage.hasPageShown(SearchPageUI.SEARCH_BAR)) {
+        if (searchPage.hasPageShown(SearchPageUI.SEARCH_BAR)) {
             saveScreen(searchPage.pageDesc);
             ResultGenerator.loadPageSucc(searchPage);
             //点击搜索框
@@ -93,7 +93,10 @@ public class Trading2020Test extends BaseTest {
                 }
             }
             driver.onclickBean(ProductDetailPageUI.SHOP_PAGE);
-
+            driver.sleep(2000);
+            driver.back();
+            driver.sleep(4000);
+            driver.waitForElement(ProductDetailPageUI.TOP_BAR);
 //            productDetailPage.scrollAgain();
             //点击"立即购买"
             productDetailPage.buy();
@@ -114,25 +117,34 @@ public class Trading2020Test extends BaseTest {
         // 订单填写页
         OrderFillPage orderFillPage = new OrderFillPage("订单填写页");
         orderFillPage.setDriver(driver);
+        driver.waitForElement(OrderFillPageUI.TITLE);
         if (orderFillPage.hasPageShown(OrderFillPageUI.TITLE)) {
             saveScreen(orderFillPage.pageDesc);
             ResultGenerator.loadPageSucc(orderFillPage);
             //
-            String discNameCommit = null;
+//            String discNameCommit = "abc";
 //            if (Config.PLATFORM == "ios"){
+//                driver.waitForElement(GetElementWay.XPATH, "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeStaticText[1]");
 //                discNameCommit = driver.getElement(GetElementWay.XPATH, "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeStaticText[1]")
 //                        .getText();
 //            }
 //            else if(Config.PLATFORM == "android"){
-//                //discNameCommit = driver.getElement(GetElementWay.XPATH, "//android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[1]/android.view.View[1]/android.view.View[2]/android.view.View[1]/android.view.View[1]").getText();
-//                discNameCommit = driver.getElement(GetElementWay.NAME, "请添加收货地址").getText();
+//                //老的地址栏,可能是红米note
+////                discNameCommit = driver.getElement(GetElementWay.XPATH, "//android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[1]/android.view.View[1]/android.view.View[2]/android.view.View[1]/android.view.View[1]").getText();
+//                //小米note的地址栏
+//                driver.sleep(1000);
+////                driver.waitForElement(GetElementWay.XPATH, "//android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[1]/android.view.View[1]/android.view.View[2]/android.view.View[1]/android.view.View[1]");
+//                discNameCommit = driver.getElement(GetElementWay.XPATH, "//android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.widget.LinearLayout[1]/android.widget.LinearLayout[1]/android.webkit.WebView[1]/android.webkit.WebView[1]/android.view.View[1]/android.view.View[1]/android.view.View[2]/android.view.View[1]/android.view.View[1]").getText();
+//
 //            }
-
-//            driver.waitForElement(OrderFillPageUI.ADD_ADDRESS).click();
-            System.out.println("哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦"+discNameCommit);
+//
+//            System.out.println("哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦哦"+discNameCommit);
+//            driver.sleep(500);
 
 //            if (discNameCommit.equals("请添加收货地址")) {
-            if (driver.waitForElement(OrderFillPageUI.ADD_ADDRESS).isDisplayed()){
+
+//            if (driver.waitForElement(OrderFillPageUI.ADD_ADDRESS).isDisplayed()){
+            if (driver.isElementExist(OrderFillPageUI.ADD_ADDRESS)){
                 System.out.println("旭哥旭哥旭哥旭哥旭哥旭哥旭哥旭哥旭哥旭哥");
                 // 新建地址页
                 //点添加收货地址
@@ -144,14 +156,17 @@ public class Trading2020Test extends BaseTest {
                     ResultGenerator.loadPageSucc(addNewAddressPage);
                     //
                     addNewAddressPage.addAddress();
+                    driver.waitForElement(OrderFillPageUI.SUBMIT_ORDER);
+                    orderFillPage.submitOrder();
                 } else {
                     // 订单填写页没有加载成功
                     ResultGenerator.loadPageFail(addNewAddressPage);
-                    return;
+                    Assert.fail("新建地址失败");
                 }
             } else {
                 // 已有地址
                 System.out.println("+++++++++++++已有地址+++++++++++++");
+                driver.waitForElement(OrderFillPageUI.SUBMIT_ORDER);
                 orderFillPage.submitOrder();
             }
         } else {
@@ -182,6 +197,7 @@ public class Trading2020Test extends BaseTest {
         // 步步夺宝宝箱掉落页
         TreasureBoxPage treasureBoxPage = new TreasureBoxPage("健康支付页");
         treasureBoxPage.setDriver(driver);
+        driver.waitForElement(TreasureBoxPageUI.BOX_TEXT);
         if (treasureBoxPage.hasPageShown(TreasureBoxPageUI.BOX_TEXT)) {
             saveScreen(treasureBoxPage.pageDesc);
             ResultGenerator.loadPageSucc(treasureBoxPage);
@@ -197,6 +213,7 @@ public class Trading2020Test extends BaseTest {
         // 付款结果页
         PayResultPage payResultPage = new PayResultPage("付款结果页");
         payResultPage.setDriver(driver);
+        driver.waitForElement(PayResultPageUI.PAY_RLT);
         if (treasureBoxPage.hasPageShown(PayResultPageUI.PAY_RLT)) {
             saveScreen(payResultPage.pageDesc);
             ResultGenerator.loadPageSucc(payResultPage);

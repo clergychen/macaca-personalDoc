@@ -2,6 +2,7 @@ package com.personalDoc.pages;
 
 import com.alibaba.fastjson.JSONObject;
 import com.personalDoc.pageuis.ProductDetailPageUI;
+import com.personalDoc.utils.Config;
 import macaca.java.biz.BasePage;
 import org.testng.Assert;
 
@@ -30,8 +31,20 @@ public class ProductDetailPage extends BasePage{
         //金额展示检查
         Assert.assertEquals(true,page.contains("￥"));
         //切换tab页
-        driver.onclickBean(ProductDetailPageUI.TAB_DETAIL);
-        driver.onclickBean(ProductDetailPageUI.TAB_PRODUCT);
+        if (Config.PLATFORM.equals("ios")) {
+            driver.onclickBean(ProductDetailPageUI.TAB_DETAIL);
+            driver.onclickBean(ProductDetailPageUI.TAB_PRODUCT);
+        }else{
+            JSONObject windowSize = driver.getWindowSize();
+            int windowWidth = windowSize.getIntValue("width");
+            int windowHeight = windowSize.getIntValue("height");
+            int centerY = windowHeight / 2;
+            driver.drag(windowWidth - 5, centerY, 30, centerY, 1);
+            driver.sleep(500);
+            driver.drag(30, centerY, windowWidth - 5, centerY, 1);
+            driver.sleep(500);
+        }
+
     }
 
 
@@ -42,18 +55,22 @@ public class ProductDetailPage extends BasePage{
     public void cross() throws Exception {
 
         //主图全屏
+        driver.waitForElement(ProductDetailPageUI.PRODUCT_MAIN_PIC);
         driver.onclickBean(ProductDetailPageUI.PRODUCT_MAIN_PIC);
+        driver.sleep(1500);
+        driver.onclickBean(ProductDetailPageUI.PRODUCT_MAIN_PIC);
+        //由于返回按钮偶现点穿的bug暂时注释掉
+//        driver.back();
         driver.sleep(500);
-        driver.onclickBean(ProductDetailPageUI.BACK);
         //主图左右滑动
         JSONObject windowSize = driver.getWindowSize();
         int windowWidth = windowSize.getIntValue("width");
         int windowHeight = windowSize.getIntValue("height");
         int centerY = windowHeight / 2;
-        driver.drag(windowWidth - 35, centerY, 35, centerY, 0.3);
+        driver.drag(windowWidth - 500, centerY, 500, centerY, 1);
         driver.sleep(500);
-        driver.drag(35, centerY, windowWidth - 35, centerY, 0.3);
-
+        driver.drag(500, centerY, windowWidth - 500, centerY, 1);
+        driver.sleep(500);
     }
 
 

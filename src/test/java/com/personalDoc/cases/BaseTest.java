@@ -25,9 +25,10 @@ public class BaseTest {
     String udid;
     String reuse;
 
-    @Parameters({"port", "udid", "reuse"})
+
 
     @BeforeTest
+    @Parameters({"port", "udid", "reuse"})
     public void beforeSuite(String port, String udid, String reuse) {
         this.port = port;
         this.udid = udid;
@@ -77,7 +78,6 @@ public class BaseTest {
         //设置最多查2s
         driver.setWaitElementTimeout(2000);
     }
-
 
     @AfterClass
     public void tearDown() throws Exception {
@@ -152,21 +152,21 @@ public class BaseTest {
 
 
             //针对华为的手机管家判断
-            HUWEIshoujiguanjiaPage huawei = new HUWEIshoujiguanjiaPage("HUAWEI读取位置信息");
-            huawei.setDriver(driver);
-            for (int i = 0; i < 3; i++) {
-                if (huawei.hasPageShown(HUWEIshoujiguanjiaPageUI.ID_CODE)) {
-                    ResultGenerator.loadPageSucc(huawei);
-                    huawei.shoujiguanjia();
-                    driver.sleep(3000);
-                    driver.waitForElement(HUWEIshoujiguanjiaPageUI.LOCA_INFO);
-                }
-                if (huawei.hasPageShown(HUWEIshoujiguanjiaPageUI.LOCA_INFO)) {
-                    ResultGenerator.loadPageSucc(huawei);
-                    huawei.shoujiguanjia();
-                    driver.sleep(3000);
-                }
-            }
+//            HUWEIshoujiguanjiaPage huawei = new HUWEIshoujiguanjiaPage("HUAWEI读取位置信息");
+//            huawei.setDriver(driver);
+//            for (int i = 0; i < 3; i++) {
+//                if (huawei.hasPageShown(HUWEIshoujiguanjiaPageUI.ID_CODE)) {
+//                    ResultGenerator.loadPageSucc(huawei);
+//                    huawei.shoujiguanjia();
+//                    driver.sleep(3000);
+//                    driver.waitForElement(HUWEIshoujiguanjiaPageUI.LOCA_INFO);
+//                }
+//                if (huawei.hasPageShown(HUWEIshoujiguanjiaPageUI.LOCA_INFO)) {
+//                    ResultGenerator.loadPageSucc(huawei);
+//                    huawei.shoujiguanjia();
+//                    driver.sleep(3000);
+//                }
+//            }
 
             // 欢迎页
             driver.waitForElement(WelcomePageUI.WEL_VIEW);
@@ -284,21 +284,21 @@ public class BaseTest {
         } else if (reuse.equals("2") | reuse.equals("3")) {
             System.out.println("覆盖安装了");
             //针对华为的手机管家判断
-            HUWEIshoujiguanjiaPage huawei = new HUWEIshoujiguanjiaPage("HUAWEI读取位置信息");
-            huawei.setDriver(driver);
-            for (int i = 0; i < 2; i++) {
-                if (huawei.hasPageShown(HUWEIshoujiguanjiaPageUI.ID_CODE)) {
-                    ResultGenerator.loadPageSucc(huawei);
-                    huawei.shoujiguanjia();
-                    driver.sleep(3000);
-                    driver.waitForElement(HUWEIshoujiguanjiaPageUI.LOCA_INFO);
-                }
-                if (huawei.hasPageShown(HUWEIshoujiguanjiaPageUI.LOCA_INFO)) {
-                    ResultGenerator.loadPageSucc(huawei);
-                    huawei.shoujiguanjia();
-                    driver.sleep(3000);
-                }
-            }
+//            HUWEIshoujiguanjiaPage huawei = new HUWEIshoujiguanjiaPage("HUAWEI读取位置信息");
+//            huawei.setDriver(driver);
+//            for (int i = 0; i < 2; i++) {
+//                if (huawei.hasPageShown(HUWEIshoujiguanjiaPageUI.ID_CODE)) {
+//                    ResultGenerator.loadPageSucc(huawei);
+//                    huawei.shoujiguanjia();
+//                    driver.sleep(3000);
+//                    driver.waitForElement(HUWEIshoujiguanjiaPageUI.LOCA_INFO);
+//                }
+//                if (huawei.hasPageShown(HUWEIshoujiguanjiaPageUI.LOCA_INFO)) {
+//                    ResultGenerator.loadPageSucc(huawei);
+//                    huawei.shoujiguanjia();
+//                    driver.sleep(3000);
+//                }
+//            }
 
             // 任意门
             AnyDoorPage anyDoorPage = new AnyDoorPage("任意门Alert");

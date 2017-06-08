@@ -19,12 +19,12 @@ public class AddNewAddressPage extends BasePage {
     public void addAddress() throws Exception {
         //页面元素展现检查
         String page = driver.source();
-        Assert.assertEquals(page, containsString("新建地址"));
-        Assert.assertEquals(page, containsString("收货人"));
-        Assert.assertEquals(page, containsString("手机号码"));
-        Assert.assertEquals(page, containsString("所在地区"));
-        Assert.assertEquals(page, containsString("收货地址"));
-        Assert.assertEquals(page, containsString("保存"));
+        Assert.assertEquals(true,page.contains("新建地址"));
+        Assert.assertEquals(true,page.contains("收货人"));
+        Assert.assertEquals(true,page.contains("手机号码"));
+        Assert.assertEquals(true,page.contains("所在地区"));
+        Assert.assertEquals(true,page.contains("收货地址"));
+        Assert.assertEquals(true,page.contains("保存"));
 
         //填写收货人
         driver.onclickBean(AddNewAddressPageUI.CONSIGNEE);

@@ -15,15 +15,13 @@ public class TreasureBoxPageUI extends BasePageUI{
             "treasureBox_gold1");
     //id_恭喜您获得一个宝箱
     public static final CommonUIBean BOX_TEXT = new CommonUIBean(
-            GetElementWay.ID, "android_value",
+            GetElementWay.NAME, "恭喜您获得一个宝箱",
             GetElementWay.NAME,"id_恭喜您获得一个宝箱",
             "id_恭喜您获得一个宝箱");
     //关闭按钮
     public static final CommonUIBean CLOSE_BTN = new CommonUIBean(
-            GetElementWay.ID, "android_value",
+            GetElementWay.ID, "com.pingan.papd:id/treasure_close_id",
             GetElementWay.NAME,"id_treasureBox_close",
             "id_treasureBox_close");
-
-
 }
 
